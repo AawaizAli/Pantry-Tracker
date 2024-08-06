@@ -110,16 +110,13 @@ export default function Home() {
                 flexDirection: "column",
             }}>
             <Typography variant="h2">My Inventory Tracker</Typography>
-            <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                {/* Search Bar */}
-                <TextField
-                    variant="outlined"
-                    placeholder="Search items"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    sx={{ width: "250px" }}
-                />
-            </Box>
+            <TextField
+                variant="outlined"
+                placeholder="Search items"
+                value={searchTerm}
+                onChange={handleSearch}
+                sx={{ width: "250px", height: '50px'}}
+            />
             <Modal open={open} onClose={handleClose}>
                 <Box
                     sx={{
