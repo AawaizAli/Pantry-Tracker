@@ -1,6 +1,17 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
-import { Modal, Box, Typography, Button, TextField, IconButton, List, ListItem, ListItemText, ListItemSecondaryAction } from "@mui/material";
+import {
+    Modal,
+    Box,
+    Typography,
+    Button,
+    TextField,
+    IconButton,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemSecondaryAction,
+} from "@mui/material";
 import { Add, Remove, Delete } from "@mui/icons-material";
 import {
     query,
@@ -97,35 +108,30 @@ export default function Home() {
                 alignItems: "center",
                 gap: "18px",
                 flexDirection: "column",
-            }}
-        >
+            }}>
             <Typography variant="h2">My Inventory Tracker</Typography>
-            <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
                 {/* Search Bar */}
                 <TextField
                     variant="outlined"
                     placeholder="Search items"
                     value={searchTerm}
                     onChange={handleSearch}
-                    sx={{ width: '250px' }}
+                    sx={{ width: "250px" }}
                 />
-                <Button variant="contained" color="primary" onClick={handleOpen}>
-                    Add New Item
-                </Button>
             </Box>
             <Modal open={open} onClose={handleClose}>
                 <Box
                     sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
                         width: 400,
-                        bgcolor: 'background.paper',
+                        bgcolor: "background.paper",
                         boxShadow: 24,
                         p: 4,
-                    }}
-                >
+                    }}>
                     <Typography variant="h6" component="h2">
                         Add New Inventory Item
                     </Typography>
@@ -136,32 +142,65 @@ export default function Home() {
                         onChange={(e) => setItemName(e.target.value)}
                         sx={{ marginTop: 2, marginBottom: 2 }}
                     />
-                    <Button variant="contained" color="primary" onClick={handleAddNewItem}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleAddNewItem}>
                         Add Item
                     </Button>
                 </Box>
             </Modal>
-            <List sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}>
+            <List
+                sx={{
+                    width: "100%",
+                    maxWidth: 600,
+                    bgcolor: "background.paper",
+                }}>
                 {filteredInventory.map((item) => (
-                    <ListItem key={item.id} sx={{ display: 'flex', justifyContent: 'center', gap: '5px' }}>
+                    <ListItem
+                        key={item.id}
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: "5px",
+                        }}>
                         <ListItemText
-                            primary={`Name: ${item.id.charAt(0).toUpperCase() + item.id.slice(1)}`}
+                            primary={`Name: ${
+                                item.id.charAt(0).toUpperCase() +
+                                item.id.slice(1)
+                            }`}
                             secondary={`Quantity: ${item.quantity || 0}`}
                         />
                         <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="add" onClick={() => addItem(item)}>
+                            <IconButton
+                                edge="end"
+                                aria-label="add"
+                                onClick={() => addItem(item)}>
                                 <Add />
                             </IconButton>
-                            <IconButton edge="end" aria-label="remove" onClick={() => removeItem(item)}>
+                            <IconButton
+                                edge="end"
+                                aria-label="remove"
+                                onClick={() => removeItem(item)}>
                                 <Remove />
                             </IconButton>
-                            <IconButton edge="end" aria-label="delete" onClick={() => deleteDoc(doc(firestore, "inventory", item.id)).then(updateInventory)}>
+                            <IconButton
+                                edge="end"
+                                aria-label="delete"
+                                onClick={() =>
+                                    deleteDoc(
+                                        doc(firestore, "inventory", item.id)
+                                    ).then(updateInventory)
+                                }>
                                 <Delete />
                             </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
                 ))}
             </List>
+            <Button variant="contained" color="primary" onClick={handleOpen}>
+                Add New Item
+            </Button>
         </Box>
     );
 }
