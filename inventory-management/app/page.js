@@ -13,15 +13,23 @@ import {
 } from "firebase/firestore";
 import { firestore } from "@/firebase";
 
+// Conditional import for Firebase Analytics
+let analytics;
+if (typeof window !== 'undefined') {
+    const { getAnalytics, isSupported } = require("firebase/analytics");
+    isSupported().then((supported) => {
+        if (supported) {
+            analytics = getAnalytics();
+            // Your analytics initialization code here
+        }
+    });
+}
+
 export default function Home() {
     const [inventory, setInventory] = useState([]);
     const [open, setOpen] = useState(false);
     const [itemName, setItemName] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
-
-    useEffect(() => {
-        updateInventory();
-    }, []);
 
     const updateInventory = async () => {
         const snapshot = query(collection(firestore, "inventory"));
@@ -68,6 +76,10 @@ export default function Home() {
         await updateInventory();
     };
 
+    useEffect(() => {
+        updateInventory();
+    }, []);
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -101,6 +113,7 @@ export default function Home() {
         >
             <Typography variant="h2">My Inventory Tracker</Typography>
             <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                {/* Search Bar */}
                 <TextField
                     variant="outlined"
                     placeholder="Search items"
